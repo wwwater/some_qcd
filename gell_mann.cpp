@@ -77,7 +77,7 @@ int main()
     sum_a = complex<float>(0,0);
     for (int i =0; i<lambda.size(); i++)
     {
-        cout << diag_matrix(lambda.at(i))<<" "<< trace(lambda.at(i))<<endl;
+        cout << lambda.at(i)<<" "<<diag_matrix(lambda.at(i))<<" "<< trace(lambda.at(i))<<endl;
         sum_a+=mult(lambda.at(i),lambda.at(i));
     }
     cout<<trace(sum_a)<<endl;
