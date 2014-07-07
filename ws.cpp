@@ -17,19 +17,23 @@ double ws (double r,int A)//r in units of R
 
 int main()
 {
-    for (int r = 0; r<10; r++)
-    {
-        //cout<<ws(r,208)<<" ";
-    }
-    cout<<endl;
-
     srand (time(NULL));
-    for (int i = 0; i<1000; i++)
+    int n = 0;
+		while (n<208)
     {
-        float r = float(rand() % 2000)/1000;
-				float y = -float(rand() % 1000)/1000;
-        if (y>=ws(r,208)) cout<<r<<" "<<y<<" "<<ws(r,208)<<endl;
-				//if (y>=ws(r,208)) cout<<"Bounded"<<endl; 
-    }
+        float r = float(rand() % 2001)/1000;
+				float y = -float(rand() % 1001)/1000;
+        float phi = float(rand() % 2001)/1000*3.141593;
+				float theta = float(rand() % 1001)/1000*3.141593;
+
+				if (y>=ws(r,208))
+				{
+						n++;
+						float x = r*cos(phi)*cos(theta);
+						float y = r*sin(phi)*cos(theta);
+						float z = r*sin(theta);
+						cout<<r<<" "<<y<<" "<<ws(r,208)<<" "<<x<<" "<<y<<" "<<z<<endl;
+				}
+		}
     return 0;
 }
