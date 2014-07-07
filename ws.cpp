@@ -19,21 +19,21 @@ int main()
 {
     srand (time(NULL));
     int n = 0;
-		while (n<208)
+    while (n<208)
     {
         float r = float(rand() % 2001)/1000;
-				float y = -float(rand() % 1001)/1000;
+        float y = -float(rand() % 1001)/1000;
         float phi = float(rand() % 2001)/1000*3.141593;
-				float theta = float(rand() % 1001)/1000*3.141593;
+        float theta = float(rand() % 1001)/1000*3.141593;
 
-				if (y>=ws(r,208))
-				{
-						n++;
-						float x = r*cos(phi)*cos(theta);
-						float y = r*sin(phi)*cos(theta);
-						float z = r*sin(theta);
-						cout<<r<<" "<<y<<" "<<ws(r,208)<<" "<<x<<" "<<y<<" "<<z<<endl;
-				}
-		}
+        if (y>=ws(r,208))
+        {
+            n++;
+            float x = r*cos(phi)*cos(theta);
+            float y = r*sin(phi)*cos(theta);
+            float z = r*sin(theta);
+            cout<<r<<" "<<y<<" "<<ws(r,208)<<" "<<x<<" "<<y<<" "<<z<<endl;
+        }
+    }
     return 0;
 }
