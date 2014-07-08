@@ -23,12 +23,12 @@ int main()
     {
         float r = float(rand() % 2001)/1000;
         float y = -float(rand() % 1001)/1000;
-        float phi = float(rand() % 2001)/1000*3.141593;
-        float theta = float(rand() % 1001)/1000*3.141593;
 
         if (y>=ws(r,208))
         {
             n++;
+            float phi = float(rand() % 2001)/1000*3.141593;
+            float theta = float(rand() % 1001)/1000*3.141593;
             float x = r*cos(phi)*cos(theta);
             float y = r*sin(phi)*cos(theta);
             float z = r*sin(theta);
