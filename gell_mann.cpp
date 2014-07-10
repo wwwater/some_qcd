@@ -4,13 +4,15 @@
 
 using namespace blitz;
 
-bool diag_matrix (Array <complex<float>,2> matrix)
+typedef complex<float> cf;
+
+bool diag_matrix (Array <cf,2> matrix)
 {
     for (int i=0; i<matrix.rows(); i++)
     {
         for (int j=0; j<matrix.cols(); j++)
         {
-            if (i!=j && matrix(i,j)!=complex<float>(0,0))
+            if (i!=j && matrix(i,j)!=cf(0,0))
             {
                 return false;
             }
@@ -19,25 +21,25 @@ bool diag_matrix (Array <complex<float>,2> matrix)
     return true;
 }
 
-complex<float> trace (Array <complex<float>,2> matrix)
+cf trace (Array <cf,2> matrix)
 {
     complex <float> sum (0,0);
     for (int i=0; i<matrix.rows(); i++) sum+=matrix(i,i);
     return sum;
 }
 
-Array <complex<float>,2> mult ( Array<complex<float>,2> a, Array<complex<float>,2> b)
+Array <cf,2> mult ( Array<cf,2> a, Array<cf,2> b)
 {
     if (a.cols()==b.rows())
     {
         int n=a.rows();
-        Array <complex<float>,2> c(a.rows(),b.cols());
-        c=complex<float>(0,0);
+        Array <cf,2> c(a.rows(),b.cols());
+        c=cf(0,0);
         for (int i=0; i<a.rows(); i++)
         {
             for (int k=0; k<b.cols(); k++)
             {
-                complex<float> sum_p (0,0);
+                cf sum_p (0,0);
                 for (int j=0; j<a.cols(); j++) sum_p+=a(i,j)*b(j,k);
                 c(i,k)=sum_p;
             }
@@ -46,20 +48,20 @@ Array <complex<float>,2> mult ( Array<complex<float>,2> a, Array<complex<float>,
     }
     else
     {
-        Array <complex<float>,2> c(0,0);
+        Array <cf,2> c(0,0);
         return c;
     }
 }
 
-Array <complex<float>,2> make_bc_matrix (vector < Array<complex<float>,2> > lambda)
+Array <cf,2> make_bc_matrix (vector < Array<cf,2> > lambda)
 {
-    Array <complex<float>,2> bc_matrix (lambda.size(),lambda.size());
-    Array <complex<float>,2> sum_a(3,3);
+    Array <cf,2> bc_matrix (lambda.size(),lambda.size());
+    Array <cf,2> sum_a(3,3);
     for (int b=0; b<lambda.size(); b++)
     {
         for (int c=0; c<lambda.size(); c++)
         {
-            sum_a = complex<float>(0,0);
+            sum_a = cf(0,0);
             for (int a=0; a<lambda.size(); a++)
             {
                 sum_a+=mult(mult(lambda.at(a),lambda.at(b)),mult(lambda.at(a),lambda.at(c)));
@@ -72,9 +74,9 @@ Array <complex<float>,2> make_bc_matrix (vector < Array<complex<float>,2> > lamb
 
 int main()
 {
-    vector < Array<complex<float>,2> > lambda = get_lambda();
-    Array <complex<float>,2> sum_a (3,3);
-    sum_a = complex<float>(0,0);
+    vector < Array<cf,2> > lambda = get_lambda();
+    Array <cf,2> sum_a (3,3);
+    sum_a = cf(0,0);
     for (int i =0; i<lambda.size(); i++)
     {
         cout << lambda.at(i)<<" "<<diag_matrix(lambda.at(i))<<" "<< trace(lambda.at(i))<<endl;

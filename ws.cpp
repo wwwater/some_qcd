@@ -21,10 +21,10 @@ int main()
     int n = 0;
     while (n<208)
     {
-        float r = float(rand() % 2001)/1000;
-        float y = -float(rand() % 1001)/1000;
-
-        if (y>=ws(r,208))
+        float r2 = float(rand() % 1001)/1000;
+        float p = -float(rand() % 1001)/1000;
+				float r = sqrt(r2);
+        if (p>=ws(r,208))
         {
             n++;
             float phi = float(rand() % 2001)/1000*3.141593;
@@ -32,7 +32,7 @@ int main()
             float x = r*cos(phi)*cos(theta);
             float y = r*sin(phi)*cos(theta);
             float z = r*sin(theta);
-            cout<<r<<" "<<y<<" "<<ws(r,208)<<" "<<x<<" "<<y<<" "<<z<<endl;
+            cout<<r<<" "<<p<<" "<<ws(r,208)<<" "<<x<<" "<<y<<" "<<z<<endl;
         }
     }
     return 0;
