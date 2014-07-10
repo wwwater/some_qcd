@@ -23,7 +23,7 @@ int main()
     {
         float r2 = float(rand() % 1001)/1000;
         float p = -float(rand() % 1001)/1000;
-				float r = sqrt(r2);
+        float r = sqrt(r2);
         if (p>=ws(r,208))
         {
             n++;
