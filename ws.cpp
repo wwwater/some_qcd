@@ -9,23 +9,37 @@
 
 typedef boost::mt19937 RNGType;
 RNGType rng(time(0));
-boost::uniform_real<> ztu( 0, 1 );
+boost::uniform_real<> ztu( 0.0, 1.0 );
 boost::variate_generator< RNGType, boost::uniform_real<> > from0to1(rng, ztu);
 
-boost::uniform_real<> utu( -2, 2 );
+boost::uniform_real<> utu( -5.0, 5.0 );
 boost::variate_generator< RNGType, boost::uniform_real<> > fromneg2to2(rng, utu);
 
 using namespace std;
 
 
-double ws (double r,int A)//r in units of R
+
+
+//Begin: WS parameters ************
+const double R_Cu=4.2; 
+const double a_Cu=0.596;
+
+const double R_Au=6.38;
+const double a_Au=0.535;
+
+const double R_Pb=6.62;
+const double a_Pb=0.546;
+//End: WS parameter ***************
+
+const double a_WS=a_Pb;
+const double R_WS=R_Pb;
+const double Normalization_WS = 1.0+exp(-R_WS/a_WS);
+const int N_WS=208;
+
+double ws (double r)//r in units of R_WS
 {
-    double V0 = 1;//MeV//as if divided by V0
-    double a = 0.5;//fm
-    double r0 = 1.25;//fm
-    double R = r0*pow(A,1/3);
-    double potential = V0/(1+exp((r*R-R)/a));
-    return potential;
+    double potential = 1.0/(1.0+exp((r*R_WS-R_WS)/a_WS));
+    return potential; // *Normalization_WS;
 }
 
 int main()
@@ -34,17 +48,18 @@ int main()
     f = fopen("ws_208.txt","w");
     int n = 0;
     //fprintf(f,"%3s %6s %6s %6s %6s %6s %6s\n","n","r","p","ws(r)","x","y","z");
-    while (n<208)
+    //while (n<N_WS)
+    while (n<10000)
     {
-        float x = fromneg2to2();
-        float y = fromneg2to2();
-        float z = fromneg2to2();
-        float p = from0to1();
-        float r = sqrt(x*x+y*y+z*z);
-        if (p*ws(0,208)<ws(r,208))
+        double x = fromneg2to2();
+        double y = fromneg2to2();
+        double z = fromneg2to2();
+        double p = from0to1();
+        double r = sqrt(x*x+y*y+z*z);
+        if (p<ws(r))
         {
             n++;
-            fprintf(f,"%3d %6.3f %6.3f %5.3f %6.3f %6.3f %6.3f\n",n,r,p*ws(0,208),ws(r,208),x,y,z);
+            fprintf(f,"%3d %6.3f %6.3f %5.3f %6.3f %6.3f %6.3f\n",n,r,p,ws(r),x,y,z);
         }
     }
     fclose(f);
